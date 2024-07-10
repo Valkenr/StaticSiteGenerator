@@ -2,6 +2,8 @@ import unittest
 
 from inline_parser import (
     split_nodes_delimiter,
+    extract_markdown_images,
+    extract_markdown_links,
 )
 
 from textnode import (
@@ -64,6 +66,32 @@ class TestInlineParser(unittest.TestCase):
                 ],
                 new_nodes,
             )
+
+    def test_image_1(self):
+        extraction = extract_markdown_images(
+            "This is text with an ![image](https://www.wee.com/Z.png) and"
+            "![another](https://rage.goo.com/d.png)"
+        )
+        self.assertEqual(
+            [
+            ("image", "https://www.wee.com/Z.png"),
+            ("another", "https://rage.goo.com/d.png"),
+            ],
+            extraction,
+        )
+
+    def test_image_2(self):
+        extraction = extract_markdown_images(
+            "This is text with a ![link](https://www.wee.com/Z.png) and"
+            "![another](https://rage.goo.com/d.png)"
+        )
+        self.assertEqual(
+            [
+            ("link", "https://www.wee.com/Z.png"),
+            ("another", "https://rage.goo.com/d.png"),
+            ],
+            extraction,
+        )
 
 
 if __name__ == "__main__":
