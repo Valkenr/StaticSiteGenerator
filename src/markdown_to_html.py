@@ -85,8 +85,8 @@ def generate_quote_node(text):
     split_quote = text.split("\n")
     quote_text = ""
     for line in split_quote:
-        quote_text += f"{line[1:]}\n"
-    quote_nodes = text_to_children(quote_text)
+        quote_text += f"{line[1:].strip()}\n"
+    quote_nodes = text_to_children(quote_text.rstrip("\n"))
     html_node = ParentNode("blockquote", quote_nodes)
     return html_node
 
